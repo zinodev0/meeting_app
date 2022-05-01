@@ -22,6 +22,10 @@ export default new Vuex.Store({
         done: false,
       },
     ],
+    snackbar: {
+      show: false,
+      text: "alert",
+    },
   },
   getters: {},
   mutations: {
@@ -40,7 +44,31 @@ export default new Vuex.Store({
     deleteMeeting(state, id) {
       state.meetings = state.meetings.filter((meeting) => meeting.id !== id);
     },
+    showSnackbar(state, text) {
+      let timeout = 0;
+      if (state.snackbar.show) {
+        state.snackbar.show = false;
+        timeout = 300;
+      }
+      setTimeout(() => {
+        state.snackbar.show = true;
+        state.snackbar.text = text;
+      }, timeout);
+    },
+    hideSnackbar(state) {
+      state.snackbar.show = false;
+    },
   },
-  actions: {},
+  actions: {
+    addMeeting({ commit }, newMeetingTitle) {
+      commit("addMeeting", newMeetingTitle);
+      commit("showSnackbar", "Meeting Added");
+    },
+
+    deleteMeeting({ commit }, id) {
+      commit("deleteMeeting", id);
+      commit("showSnackbar", "Meeting Deleted");
+    },
+  },
   modules: {},
 });

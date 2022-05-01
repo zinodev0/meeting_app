@@ -25,14 +25,8 @@ export default {
 
   methods: {
     addMeeting() {
-      this.$store.commit("addMeeting", this.newMeetingTitle);
+      this.$store.dispatch("addMeeting", this.newMeetingTitle);
       this.newMeetingTitle = "";
-    },
-    doneMeeting(id) {
-      this.$store.commit("doneMeeting", id);
-    },
-    deleteMeeting(id) {
-      this.$store.commit("deleteMeeting", id);
     },
   },
 };

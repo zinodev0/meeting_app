@@ -57,11 +57,14 @@
 
     <v-main>
       <router-view> </router-view>
+      <Snackbar />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import Snackbar from "@/components/Global/Snackbar.vue";
+
 export default {
   data: () => ({
     drawer: null,
@@ -70,5 +73,9 @@ export default {
       { title: "About", icon: "mdi-help-box", route: "/about" },
     ],
   }),
+
+  components: {
+    Snackbar,
+  },
 };
 </script>
