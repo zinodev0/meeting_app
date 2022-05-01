@@ -44,6 +44,12 @@ export default new Vuex.Store({
     deleteMeeting(state, id) {
       state.meetings = state.meetings.filter((meeting) => meeting.id !== id);
     },
+    updateMeetingTitle(state, payload) {
+      let meeting = state.meetings.filter(
+        (meeting) => meeting.id === payload.id
+      )[0];
+      meeting.title = payload.title;
+    },
     showSnackbar(state, text) {
       let timeout = 0;
       if (state.snackbar.show) {

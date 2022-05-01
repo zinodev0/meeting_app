@@ -16,39 +16,28 @@
               }}</v-list-item-subtitle> -->
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn icon>
+          <meeting-menu :meeting="meeting" />
+          <!-- <v-btn icon>
             <v-icon @click.stop="dialogs.delete = true" color="red lighten-1"
               >mdi-delete</v-icon
             >
-          </v-btn>
+          </v-btn> -->
         </v-list-item-action>
       </template>
     </v-list-item>
     <v-divider> </v-divider>
-    <dialog-delete
-      @close="dialogs.delete = false"
-      v-if="dialogs.delete"
-      :meeting="meeting"
-    />
   </div>
 </template>
 
 <script>
-import DialogDelete from "@/components/Meeting/Dialog/DialogDelete.vue";
+import MeetingMenu from "@/components/Meeting/MeetingMenu.vue";
 
 export default {
   name: "meeting",
   props: ["meeting"],
 
-  data() {
-    return {
-      dialogs: {
-        delete: false,
-      },
-    };
-  },
   components: {
-    DialogDelete,
+    MeetingMenu,
   },
   methods: {
     doneMeeting(id) {
