@@ -10,16 +10,19 @@ export default new Vuex.Store({
         id: 1,
         title: "Meeting 1 title",
         done: false,
+        dueDate: "2022-05-16",
       },
       {
         id: 2,
         title: "Meeting 2 title",
         done: false,
+        dueDate: "2020-11-24",
       },
       {
         id: 3,
         title: "Meeting 3 title",
         done: false,
+        dueDate: null,
       },
     ],
     snackbar: {
@@ -34,6 +37,7 @@ export default new Vuex.Store({
         id: Date.now(),
         title: newMeetingTitle,
         done: false,
+        dueDate: null,
       };
       state.meetings.push(newMeeting);
     },
@@ -49,6 +53,12 @@ export default new Vuex.Store({
         (meeting) => meeting.id === payload.id
       )[0];
       meeting.title = payload.title;
+    },
+    updateMeetingDueDate(state, payload) {
+      let meeting = state.meetings.filter(
+        (meeting) => meeting.id === payload.id
+      )[0];
+      meeting.dueDate = payload.dueDate;
     },
     showSnackbar(state, text) {
       let timeout = 0;
@@ -74,6 +84,14 @@ export default new Vuex.Store({
     deleteMeeting({ commit }, id) {
       commit("deleteMeeting", id);
       commit("showSnackbar", "Meeting Deleted");
+    },
+    updateMeetingTitle({ commit }, payload) {
+      commit("updateMeetingTitle", payload);
+      commit("showSnackbar", " Meeting Updated");
+    },
+    updateMeetingDueDate({ commit }, payload) {
+      commit("updateMeetingDueDate", payload);
+      commit("showSnackbar", " Due Date Updated");
     },
   },
   modules: {},

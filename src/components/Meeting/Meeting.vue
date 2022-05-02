@@ -10,18 +10,19 @@
         </v-list-item-action>
 
         <v-list-item-content>
-          <v-list-item-title>{{ meeting.title }}</v-list-item-title>
+          <v-list-item-title> {{ meeting.title }}</v-list-item-title>
           <!-- <v-list-item-subtitle>{{
                 meeting.description
               }}</v-list-item-subtitle> -->
         </v-list-item-content>
+        <v-list-item-action v-if="meeting.dueDate">
+          <v-list-item-action-text>
+            <v-icon small>mdi-calendar</v-icon
+            >{{ meeting.dueDate | formattedDate }}</v-list-item-action-text
+          >
+        </v-list-item-action>
         <v-list-item-action>
           <meeting-menu :meeting="meeting" />
-          <!-- <v-btn icon>
-            <v-icon @click.stop="dialogs.delete = true" color="red lighten-1"
-              >mdi-delete</v-icon
-            >
-          </v-btn> -->
         </v-list-item-action>
       </template>
     </v-list-item>
@@ -31,11 +32,16 @@
 
 <script>
 import MeetingMenu from "@/components/Meeting/MeetingMenu.vue";
+import { format } from "date-fns";
 
 export default {
   name: "meeting",
   props: ["meeting"],
-
+  filters: {
+    formattedDate(value) {
+      return format(new Date(value), "MMM do");
+    },
+  },
   components: {
     MeetingMenu,
   },

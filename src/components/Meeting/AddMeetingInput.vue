@@ -2,15 +2,22 @@
   <div class="input">
     <v-text-field
       v-model="newMeetingTitle"
-      @click:append="addMeeting"
       @keyup.enter="addMeeting"
       class="pa-3"
       outlined
       label="Add Meeting"
-      append-icon="mdi-plus"
       hide-details
       clearable
-    ></v-text-field>
+    >
+      <template v-slot:append>
+        <v-icon
+          :disabled="invalidMeetingTitle"
+          color="primary"
+          @click="addMeeting"
+          >mdi-plus</v-icon
+        >
+      </template>
+    </v-text-field>
   </div>
 </template>
 
@@ -23,10 +30,18 @@ export default {
     };
   },
 
+  computed: {
+    invalidMeetingTitle() {
+      return !this.newMeetingTitle;
+    },
+  },
+
   methods: {
     addMeeting() {
-      this.$store.dispatch("addMeeting", this.newMeetingTitle);
-      this.newMeetingTitle = "";
+      if (!this.invalidMeetingTitle) {
+        this.$store.dispatch("addMeeting", this.newMeetingTitle);
+        this.newMeetingTitle = "";
+      }
     },
   },
 };

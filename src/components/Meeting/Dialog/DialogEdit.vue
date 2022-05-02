@@ -42,7 +42,7 @@ export default {
           id: this.meeting.id,
           title: this.meetingTitle,
         };
-        this.$store.commit("updateMeetingTitle", payload);
+        this.$store.dispatch("updateMeetingTitle", payload);
         this.$emit("close");
       }
     },

@@ -20,6 +20,11 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    <dialog-due-date
+      @close="dialogs.dueDate = false"
+      v-if="dialogs.dueDate"
+      :meeting="meeting"
+    />
     <dialog-edit
       @close="dialogs.edit = false"
       v-if="dialogs.edit"
@@ -36,16 +41,20 @@
 <script>
 import DialogEdit from "@/components/Meeting/Dialog/DialogEdit.vue";
 import DialogDelete from "@/components/Meeting/Dialog/DialogDelete.vue";
+import DialogDueDate from "@/components/Meeting/Dialog/DialogDueDate.vue";
+
 export default {
   name: "MeetingMenu",
   props: ["meeting"],
   components: {
     DialogEdit,
     DialogDelete,
+    DialogDueDate,
   },
   data: () => ({
     dialogs: {
       edit: false,
+      dueDate: false,
       delete: false,
     },
     items: [
@@ -60,7 +69,7 @@ export default {
         title: "Due date",
         icon: "mdi-calendar",
         click() {
-          console.log("due date");
+          this.dialogs.dueDate = true;
         },
       },
       {
