@@ -1,7 +1,7 @@
 <template>
   <v-list two-line flat>
     <meeting
-      v-for="meeting in $store.state.meetings"
+      v-for="meeting in $store.getters.meetingsFiltered"
       :key="meeting.id"
       :meeting="meeting"
     />

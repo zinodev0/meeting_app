@@ -28,7 +28,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="#6A76AB" dark prominent src="img/meeting.jpg">
+    <v-app-bar
+      app
+      color="#6A76AB"
+      dark
+      height="180"
+      prominent
+      src="img/meeting.jpg"
+    >
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
@@ -36,34 +43,37 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-container class="pa-0 pt-2">
+        <v-row>
+          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-spacer></v-spacer>
 
-      <v-app-bar-title class="overflow-unset">Welcome .</v-app-bar-title>
+          <search />
+        </v-row>
+        <v-row>
+          <v-app-bar-title class="ml-4 text-h4">Welcome .</v-app-bar-title>
+        </v-row>
+        <v-row>
+          <live-date-time />
+        </v-row>
+      </v-container>
 
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-main>
       <router-view> </router-view>
-      <Snackbar />
+      <snackbar />
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Snackbar from "@/components/Global/Snackbar.vue";
+import Search from "@/components/Tools/Search.vue";
+import LiveDateTime from "./components/Tools/LiveDateTime.vue";
 
 export default {
   data: () => ({
@@ -76,6 +86,8 @@ export default {
 
   components: {
     Snackbar,
+    Search,
+    LiveDateTime,
   },
 };
 </script>

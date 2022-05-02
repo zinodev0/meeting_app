@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    search: null,
     meetings: [
       {
         id: 1,
@@ -30,8 +31,21 @@ export default new Vuex.Store({
       text: "alert",
     },
   },
-  getters: {},
+  getters: {
+    meetingsFiltered(state) {
+      if (!state.search) {
+        return state.meetings;
+      }
+      return state.meetings.filter((meeting) =>
+        meeting.title.toLowerCase().includes(state.search.toLowerCase())
+      );
+    },
+  },
   mutations: {
+    setSearch(state, value) {
+      state.search = value;
+    },
+
     addMeeting(state, newMeetingTitle) {
       let newMeeting = {
         id: Date.now(),
