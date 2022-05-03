@@ -31,7 +31,7 @@ export default {
         return this.$store.getters.meetingsFiltered;
       },
       set(value) {
-        this.$store.commit("setMeetings", value);
+        this.$store.dispatch("setMeetings", value);
       },
     },
   },

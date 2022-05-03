@@ -1,24 +1,25 @@
 <template>
-  <div class="input">
-    <v-text-field
-      v-model="newMeetingTitle"
-      @keyup.enter="addMeeting"
-      class="pa-3"
-      outlined
-      label="Add Meeting"
-      hide-details
-      clearable
-    >
-      <template v-slot:append>
-        <v-icon
-          :disabled="invalidMeetingTitle"
-          color="primary"
-          @click="addMeeting"
-          >mdi-plus</v-icon
+  <v-container class="px-0" fluid>
+    <v-row>
+      <v-col class="mx-auto" cols="12" sm="9">
+        <v-text-field
+          v-model="newMeetingTitle"
+          @keyup.enter="addMeeting"
+          class="pa-3 field-add-meeting"
+          outlined
+          placeholder="Add Meeting"
+          hide-details
+          clearable
         >
-      </template>
-    </v-text-field>
-  </div>
+          <template v-slot:append>
+            <v-icon :disabled="invalidMeetingTitle" @click="addMeeting"
+              >mdi-plus</v-icon
+            >
+          </template>
+        </v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -47,15 +48,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.input {
-  width: 60%;
-  margin: auto;
-}
-
-@media screen and (max-width: 600px) {
-  .input {
-    width: 90%;
-  }
+<style>
+.field-add-meeting.v-input--is-focused .v-input__slot {
+  background: #3a4577 !important;
 }
 </style>

@@ -38,14 +38,14 @@
       app
       color="#6A76AB"
       dark
-      height="180"
+      :height="$route.path === '/' ? '205' : '180'"
       prominent
       src="img/meeting.jpg"
     >
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+          gradient="to top right, rgba(100,115,201,.9), rgba(25,32,72,.9)"
         ></v-img>
       </template>
 
@@ -56,13 +56,16 @@
 
           <search />
         </v-row>
-        <v-row>
+        <v-row class="mt-n3">
           <v-app-bar-title class="ml-4 text-h4">{{
             $store.state.appTitle
           }}</v-app-bar-title>
         </v-row>
         <v-row>
           <live-date-time />
+        </v-row>
+        <v-row class="mt-n5" v-if="$route.path === '/'">
+          <add-meeting-input />
         </v-row>
       </v-container>
 
@@ -82,6 +85,7 @@
 import Snackbar from "@/components/Global/Snackbar.vue";
 import Search from "@/components/Tools/Search.vue";
 import LiveDateTime from "./components/Tools/LiveDateTime.vue";
+import AddMeetingInput from "./components/Meeting/AddMeetingInput.vue";
 
 export default {
   data: () => ({
@@ -96,6 +100,10 @@ export default {
     Snackbar,
     Search,
     LiveDateTime,
+    AddMeetingInput,
+  },
+  mounted() {
+    this.$store.dispatch("getMeetings");
   },
 };
 </script>

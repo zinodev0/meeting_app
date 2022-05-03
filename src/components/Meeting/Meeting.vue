@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     doneMeeting(id) {
-      this.$store.commit("doneMeeting", id);
+      this.$store.dispatch("doneMeeting", id);
     },
   },
 };

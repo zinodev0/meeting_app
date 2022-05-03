@@ -1,5 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Localbase from "localbase";
+
+let db = new Localbase("db");
+db.config.debug = false;
 
 Vue.use(Vuex);
 
@@ -8,24 +12,24 @@ export default new Vuex.Store({
     appTitle: process.env.VUE_APP_TITLE,
     search: null,
     meetings: [
-      {
-        id: 1,
-        title: "Meeting 1 title",
-        done: false,
-        dueDate: "2022-05-16",
-      },
-      {
-        id: 2,
-        title: "Meeting 2 title",
-        done: false,
-        dueDate: "2020-11-24",
-      },
-      {
-        id: 3,
-        title: "Meeting 3 title",
-        done: false,
-        dueDate: null,
-      },
+      // {
+      //   id: 1,
+      //   title: "Meeting 1 title",
+      //   done: false,
+      //   dueDate: "2022-05-16",
+      // },
+      // {
+      //   id: 2,
+      //   title: "Meeting 2 title",
+      //   done: false,
+      //   dueDate: "2020-11-24",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Meeting 3 title",
+      //   done: false,
+      //   dueDate: null,
+      // },
     ],
     snackbar: {
       show: false,
@@ -48,13 +52,7 @@ export default new Vuex.Store({
       state.search = value;
     },
 
-    addMeeting(state, newMeetingTitle) {
-      let newMeeting = {
-        id: Date.now(),
-        title: newMeetingTitle,
-        done: false,
-        dueDate: null,
-      };
+    addMeeting(state, newMeeting) {
       state.meetings.push(newMeeting);
     },
     doneMeeting(state, id) {
@@ -99,22 +97,54 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    addMeeting({ commit }, newMeetingTitle) {
-      commit("addMeeting", newMeetingTitle);
+    async addMeeting({ commit }, newMeetingTitle) {
+      let newMeeting = {
+        id: Date.now(),
+        title: newMeetingTitle,
+        done: false,
+        dueDate: null,
+      };
+      await db.collection("meetings").add(newMeeting);
+
+      commit("addMeeting", newMeeting);
       commit("showSnackbar", "Meeting Added");
     },
+    async doneMeeting({ state, commit }, id) {
+      let meeting = state.meetings.filter((meeting) => meeting.id === id)[0];
+      await db.collection("meetings").doc({ id }).update({
+        done: !meeting.done,
+      });
+      commit("doneMeeting", id);
+    },
 
-    deleteMeeting({ commit }, id) {
+    async deleteMeeting({ commit }, id) {
+      await db.collection("meetings").doc({ id }).delete();
       commit("deleteMeeting", id);
       commit("showSnackbar", "Meeting Deleted");
     },
-    updateMeetingTitle({ commit }, payload) {
+    async updateMeetingTitle({ commit }, payload) {
+      await db.collection("meetings").doc({ id: payload.id }).update({
+        title: payload.title,
+      });
       commit("updateMeetingTitle", payload);
       commit("showSnackbar", " Meeting Updated");
     },
-    updateMeetingDueDate({ commit }, payload) {
+    async updateMeetingDueDate({ commit }, payload) {
+      await db.collection("meetings").doc({ id: payload.id }).update({
+        dueDate: payload.dueDate,
+      });
       commit("updateMeetingDueDate", payload);
       commit("showSnackbar", " Due Date Updated");
+    },
+
+    setMeetings({ commit }, meetings) {
+      db.collection("meetings").set(meetings);
+      commit("setMeetings", meetings);
+    },
+    async getMeetings({ commit }) {
+      let meetings = await db.collection("meetings").get();
+
+      commit("setMeetings", meetings);
     },
   },
   modules: {},

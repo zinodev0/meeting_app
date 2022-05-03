@@ -8,6 +8,7 @@
     :class="{ closed: searchClosed && !$store.state.search }"
     prepend-inner-icon="mdi-magnify"
     dense
+    :disabled="$store.state.sorting"
     clearable
     placeholder="Search"
     filled
