@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    appTitle: process.env.VUE_APP_TITLE,
     search: null,
     meetings: [
       {
@@ -30,6 +31,7 @@ export default new Vuex.Store({
       show: false,
       text: "alert",
     },
+    sorting: false,
   },
   getters: {
     meetingsFiltered(state) {
@@ -74,6 +76,9 @@ export default new Vuex.Store({
       )[0];
       meeting.dueDate = payload.dueDate;
     },
+    setMeetings(state, meetings) {
+      state.meetings = meetings;
+    },
     showSnackbar(state, text) {
       let timeout = 0;
       if (state.snackbar.show) {
@@ -87,6 +92,10 @@ export default new Vuex.Store({
     },
     hideSnackbar(state) {
       state.snackbar.show = false;
+    },
+
+    toggleSorting(state) {
+      state.sorting = !state.sorting;
     },
   },
   actions: {

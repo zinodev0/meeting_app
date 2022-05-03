@@ -3,6 +3,8 @@
     <v-list-item
       :class="{ 'blue lighten-5': meeting.done }"
       @click="doneMeeting(meeting.id)"
+      :ripple="false"
+      class="white"
     >
       <template v-slot:default>
         <v-list-item-action>
@@ -23,6 +25,11 @@
         </v-list-item-action>
         <v-list-item-action>
           <meeting-menu :meeting="meeting" />
+        </v-list-item-action>
+        <v-list-item-action v-if="$store.state.sorting">
+          <v-btn class="handle" color="primary" icon>
+            <v-icon>mdi-drag-horizontal-variant</v-icon>
+          </v-btn>
         </v-list-item-action>
       </template>
     </v-list-item>
@@ -53,4 +60,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.sortable-ghost {
+  opacity: 0;
+}
+.sortable-drag {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+</style>

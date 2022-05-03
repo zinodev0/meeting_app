@@ -1,14 +1,20 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6"> Meeting App </v-list-item-title>
-          <v-list-item-subtitle> Made with vue js </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
+    <v-navigation-drawer v-model="drawer" app :mobile-breakpoint="768">
+      <v-img
+        gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+        src="img/meeting.jpg"
+        height="180"
+        class="pa-4 pt-7"
+      >
+        <v-avatar size="70" class="mb-2">
+          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        </v-avatar>
+        <div class="white--text text-subtitle-1 font-weight-bold">
+          FirstName LastName
+        </div>
+        <div class="white--text text-subtitle-2">username</div>
+      </v-img>
 
       <v-list dense nav>
         <v-list-item
@@ -43,7 +49,7 @@
         ></v-img>
       </template>
 
-      <v-container class="pa-0 pt-2">
+      <v-container class="pa-0 pt-2 header-container">
         <v-row>
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
@@ -51,7 +57,9 @@
           <search />
         </v-row>
         <v-row>
-          <v-app-bar-title class="ml-4 text-h4">Welcome .</v-app-bar-title>
+          <v-app-bar-title class="ml-4 text-h4">{{
+            $store.state.appTitle
+          }}</v-app-bar-title>
         </v-row>
         <v-row>
           <live-date-time />
@@ -91,3 +99,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.header-container {
+  max-width: none !important;
+}
+.v-app-bar-title__placeholder,
+.v-app-bar-title__content {
+  overflow: initial !important;
+}
+</style>
